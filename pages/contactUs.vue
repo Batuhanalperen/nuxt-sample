@@ -1,13 +1,13 @@
 <template>
-  <div>Homepage</div>
+  <div>Contact Us</div>
 </template>
 
 <script>
 export default {
-  name: 'Homepage',
+  name: 'ContactUs',
   head() {
     return {
-      title: 'Homepage',
+      title: 'Contact Us',
     }
   },
 }
