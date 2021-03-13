@@ -51,6 +51,8 @@ export default {
         },
       },
     ],
+    // https://axios.nuxtjs.org/
+    '@nuxtjs/axios',
   ],
 
   // i18n config
@@ -67,7 +69,16 @@ export default {
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/api/': {
+      target: 'http://example.com',
+      pathRewrite: { '^/api/': '' },
+    },
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

@@ -3,5 +3,6 @@
   "email": "E-posta",
   "password": "Şifre",
   "required": "{name} zorunludur.",
-  "passValidator": "Parola sekiz karakter veya daha uzun olmalıdır."
+  "passValidator": "Parola sekiz karakter veya daha uzun olmalıdır.",
+  "mailValidator": "E-posta geçerli olmalıdır."
 }

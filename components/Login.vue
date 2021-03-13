@@ -17,7 +17,7 @@
         </div>
         <v-form ref="form" v-model="valid">
           <v-row>
-            <v-col cols="12" md="12">
+            <v-col cols="12">
               <v-text-field
                 v-model="user.name"
                 :rules="nameRules"
@@ -26,7 +26,7 @@
               />
             </v-col>
 
-            <v-col cols="12" md="12">
+            <v-col cols="12">
               <v-text-field
                 v-model="user.email"
                 :rules="emailRules"
@@ -34,7 +34,7 @@
                 required
               />
             </v-col>
-            <v-col cols="12" md="12">
+            <v-col cols="12">
               <v-text-field
                 v-model="user.password"
                 :rules="passwordRules"
@@ -75,12 +75,13 @@ export default {
         password: '',
       },
       nameRules: [
-        (v) => !!v || 'Name is required',
-        (v) => v.length > 3 || 'Name must be at least 3 characters',
+        (v) =>
+          !!v || this.$t('login.required', { name: this.$t('login.name') }),
       ],
       emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+/.test(v) || 'E-mail must be valid',
+        (v) =>
+          !!v || this.$t('login.required', { name: this.$t('login.email') }),
+        (v) => /.+@.+/.test(v) || this.$t('login.mailValidator'),
       ],
       passwordRules: [
         (v) => /(?=.{8,})/.test(v) || this.$t('login.passValidator'),
