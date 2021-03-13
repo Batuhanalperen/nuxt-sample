@@ -4,7 +4,11 @@
       <div class="navbar">
         <div class="logo">
           <v-icon>mdi-checkbox-blank-circle</v-icon>
-          <v-toolbar-title v-text="pageTitle" />
+          <v-toolbar-title
+            style="cursor: pointer"
+            @click="$router.push($t('links.homepage'))"
+            v-text="pageTitle"
+          />
         </div>
         <Menu :menu="menu" />
         <v-btn
