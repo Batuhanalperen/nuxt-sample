@@ -1,5 +1,8 @@
 <template>
-  <div>{{ $t('homepage.p') }}</div>
+  <div>
+    <h1>{{ $t('menu.homepage') }}</h1>
+    <p>{{ $t('homepage.p') }}</p>
+  </div>
 </template>
 
 <script>

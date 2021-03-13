@@ -1,5 +1,7 @@
 <template>
-  <div>Contact Us</div>
+  <div>
+    <h1>{{ $t('menu.contactUs') }}</h1>
+  </div>
 </template>
 
 <script>
