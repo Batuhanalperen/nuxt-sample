@@ -1,7 +1,7 @@
 <template>
   <div class="nav" :class="{ vertical, horizontal: !vertical }">
     <ul>
-      <nuxt-link v-for="{ title, path } in menu" :key="path" :to="path">
+      <nuxt-link v-for="title in menu" :key="title" :to="$t(`links.${title}`)">
         <li>{{ $t(`menu.${title}`) }}</li>
       </nuxt-link>
       <Login v-if="!user.email" />

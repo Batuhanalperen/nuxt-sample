@@ -45,10 +45,7 @@ export default {
   name: 'Default',
   data() {
     return {
-      menu: [
-        { title: 'homepage', path: this.$t('links.homepage') },
-        { title: 'contactUs', path: this.$t('links.contactUs') },
-      ],
+      menu: ['homepage', 'contactUs'],
       isMenuOpen: false,
       windowWidth: 0,
     }
@@ -82,9 +79,10 @@ export default {
   methods: {
     ...mapMutations(['setTitle']),
     getTitle(name) {
-      const finded = this.menu.find((x) => x.title === name.split('__')[0])
-      const title = finded ? finded.title : ''
-      this.setTitle(title)
+      this.menu.forEach((x) => {
+        if (x === name.split('__')[0]) this.setTitle(x)
+        else this.setTitle(null)
+      })
     },
     onResize() {
       this.windowWidth = window.innerWidth
