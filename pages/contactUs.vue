@@ -41,6 +41,8 @@
               :items="countryList"
               item-text="name"
               item-value="id"
+              :label="$t('contactUs.country')"
+              :rules="countryRules"
             >
               <template #selection="data">
                 <div class="selected-country">
@@ -125,6 +127,11 @@ export default {
       nameRules: [
         (v) =>
           !!v || this.$t('login.required', { name: this.$t('login.name') }),
+      ],
+      countryRules: [
+        (v) =>
+          !!v ||
+          this.$t('login.required', { name: this.$t('contactUs.country') }),
       ],
       emailRules: [
         (v) =>
