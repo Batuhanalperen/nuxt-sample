@@ -1,5 +1,5 @@
 <template>
-  <div class="nav">
+  <div class="nav" :class="{ vertical, horizontal: !vertical }">
     <ul>
       <nuxt-link v-for="{ title, path } in menu" :key="path" :to="path">
         <li>{{ $t(`menu.${title}`) }}</li>
@@ -49,6 +49,11 @@ export default {
       type: Array,
       required: true,
     },
+    vertical: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   computed: {
     ...mapGetters(['user']),
@@ -78,8 +83,13 @@ export default {
 <style lang="scss" scoped>
 .nav {
   height: 100%;
-  display: flex;
-  align-items: center;
+  &.horizontal {
+    display: flex;
+    align-items: center;
+  }
+  &.vertical {
+    display: none;
+  }
   .lang,
   .user {
     display: flex;
@@ -113,5 +123,54 @@ export default {
     color: black;
     text-decoration: none;
   }
+}
+
+@media only screen and (max-width: 768px) {
+  .nav {
+    height: auto;
+    padding-top: 16px;
+    padding-left: 8px;
+    &.vertical {
+      display: block;
+      width: 100%;
+      ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        transition: 0.2s all ease-in-out;
+        &:hover {
+          background: #cecece;
+        }
+      }
+      .lang,
+      .user {
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        height: auto;
+        transition: 0.2s all ease-in-out;
+        &:hover {
+          background: #cecece;
+        }
+      }
+    }
+    &.horizontal {
+      display: none;
+    }
+  }
+}
+</style>
+<style>
+.v-navigation-drawer__content {
+  max-height: 100vh;
 }
 </style>

@@ -7,8 +7,26 @@
           <v-toolbar-title v-text="pageTitle" />
         </div>
         <Menu :menu="menu" />
+        <v-btn
+          fab
+          elevation="0"
+          class="mobile-menu"
+          @click="isMenuOpen = !isMenuOpen"
+        >
+          <v-icon> mdi-menu </v-icon>
+        </v-btn>
       </div>
     </v-app-bar>
+    <v-navigation-drawer
+      v-model="isMenuOpen"
+      app
+      disable-resize-watcher
+      disable-route-watcher
+      fixed
+      right
+    >
+      <Menu :menu="menu" vertical />
+    </v-navigation-drawer>
     <v-main>
       <v-container>
         <nuxt />
@@ -31,6 +49,8 @@ export default {
         { title: 'homepage', path: this.$t('links.homepage') },
         { title: 'contactUs', path: this.$t('links.contactUs') },
       ],
+      isMenuOpen: false,
+      windowWidth: 0,
     }
   },
   computed: {
@@ -45,9 +65,19 @@ export default {
     '$route.name'(name) {
       this.getTitle(name)
     },
+    windowWidth(width) {
+      if (width > 768) this.isMenuOpen = false
+    },
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize)
   },
   mounted() {
     this.getTitle(this.$route.name)
+    this.windowWidth = window.innerWidth
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize)
+    })
   },
   methods: {
     ...mapMutations(['setTitle']),
@@ -55,6 +85,9 @@ export default {
       const finded = this.menu.find((x) => x.title === name.split('__')[0])
       const title = finded ? finded.title : ''
       this.setTitle(title)
+    },
+    onResize() {
+      this.windowWidth = window.innerWidth
     },
   },
 }
@@ -70,6 +103,17 @@ export default {
     display: flex;
     i {
       margin-right: 8px;
+    }
+  }
+  .mobile-menu {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    .mobile-menu {
+      display: block;
     }
   }
 }
