@@ -19,23 +19,9 @@
         </v-list>
       </v-menu>
     </ul>
-    <v-menu offset-y>
-      <template #activator="{ on, attrs }">
-        <div v-bind="attrs" class="lang" v-on="on">
-          {{ selectedLocale }}
-          <v-icon>mdi-chevron-down</v-icon>
-        </div>
-      </template>
-      <v-list>
-        <v-list-item
-          v-for="locale in availableLocales"
-          :key="locale.code"
-          @click="changeLocale(locale.code)"
-        >
-          {{ locale.name }}
-        </v-list-item>
-      </v-list>
-    </v-menu>
+    <div class="lang">
+      <SwitchLang />
+    </div>
   </div>
 </template>
 
@@ -57,22 +43,12 @@ export default {
   },
   computed: {
     ...mapGetters(['user']),
-    availableLocales() {
-      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)
-    },
-    selectedLocale() {
-      return this.$i18n.locales.find((i) => i.code === this.$i18n.locale).name
-    },
   },
   beforeMount() {
     this.setLocale(this.$i18n.locale)
   },
   methods: {
     ...mapMutations(['setLocale']),
-    changeLocale(code) {
-      this.$i18n.setLocale(code)
-      this.setLocale(code)
-    },
     logout() {
       this.$store.dispatch('logout')
     },

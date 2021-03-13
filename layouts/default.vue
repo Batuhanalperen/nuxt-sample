@@ -50,6 +50,13 @@ export default {
       windowWidth: 0,
     }
   },
+  head() {
+    return {
+      htmlAttrs: {
+        lang: this.$i18n.locale,
+      },
+    }
+  },
   computed: {
     ...mapGetters(['title']),
     pageTitle() {

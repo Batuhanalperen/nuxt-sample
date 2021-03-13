@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="isVisible" width="500">
+  <v-dialog v-model="isVisible" width="500" @click:outside="isVisible = false">
     <template #activator="{ on, attrs }">
       <div class="activator" v-bind="attrs" v-on="on">
         {{ $t('menu.login') }}
@@ -8,25 +8,42 @@
 
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        Privacy Policy
+        {{ $t('menu.login') }}
+        <v-icon @click="isVisible = false"> mdi-close </v-icon>
       </v-card-title>
+      <v-container class="login">
+        <div class="lang">
+          <SwitchLang />
+        </div>
+        <v-form ref="form" v-model="valid">
+          <v-row>
+            <v-col cols="12" md="12">
+              <v-text-field
+                v-model="user.name"
+                :rules="nameRules"
+                label="Name"
+                required
+              />
+            </v-col>
 
-      <v-card-text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </v-card-text>
+            <v-col cols="12" md="12">
+              <v-text-field
+                v-model="user.email"
+                :rules="emailRules"
+                label="E-mail"
+                required
+              />
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-container>
 
       <v-divider></v-divider>
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="isVisible = false">
-          I accept
+        <v-btn color="primary" text @click="handleLogin">
+          {{ $t('menu.login') }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -39,7 +56,34 @@ export default {
   data() {
     return {
       isVisible: false,
+      valid: false,
+      user: {
+        name: '',
+        email: '',
+      },
+      nameRules: [
+        (v) => !!v || 'Name is required',
+        (v) => v.length > 3 || 'Name must be at least 3 characters',
+      ],
+      emailRules: [
+        (v) => !!v || 'E-mail is required',
+        (v) => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
     }
+  },
+  watch: {
+    isVisible(isVisible) {
+      if (isVisible && this.$refs.form) this.$refs.form.resetValidation()
+    },
+  },
+  methods: {
+    handleLogin() {
+      this.$refs.form.validate()
+      if (this.valid) {
+        this.$store.commit('setUser', this.user)
+        this.isVisible = false
+      }
+    },
   },
 }
 </script>
@@ -53,5 +97,18 @@ export default {
   &:hover {
     background: #cecece;
   }
+}
+.login {
+  padding: 0 32px 32px 32px;
+}
+.headline {
+  display: flex;
+  justify-content: space-between;
+}
+.lang {
+  width: 100%;
+  margin: 16px 0;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
