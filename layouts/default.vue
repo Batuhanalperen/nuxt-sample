@@ -2,7 +2,10 @@
   <v-app>
     <v-app-bar fixed app elevation="0">
       <div class="navbar">
-        <v-toolbar-title v-text="pageTitle" />
+        <div class="logo">
+          <v-icon>mdi-checkbox-blank-circle</v-icon>
+          <v-toolbar-title v-text="pageTitle" />
+        </div>
         <div class="nav">
           <v-menu offset-y>
             <template #activator="{ on, attrs }">
@@ -101,42 +104,48 @@ export default {
   width: 100%;
   height: 100%;
   align-items: center;
-}
-.nav {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  .lang {
+  .logo {
     display: flex;
-    align-items: center;
-    padding: 0 16px;
-    height: 100%;
-    transition: 0.2s all ease-in-out;
-    &:hover {
-      background: #cecece;
+    i {
+      margin-right: 8px;
     }
   }
-  ul {
-    margin-left: 16px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: stretch;
+  .nav {
     height: 100%;
-    list-style: none;
-  }
-  li {
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    height: 100%;
-    transition: 0.2s all ease-in-out;
-    &:hover {
-      background: #cecece;
+    .lang {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      height: 100%;
+      transition: 0.2s all ease-in-out;
+      &:hover {
+        background: #cecece;
+      }
     }
-  }
-  a {
-    color: black;
-    text-decoration: none;
+    ul {
+      margin-left: 16px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: stretch;
+      height: 100%;
+      list-style: none;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      height: 100%;
+      transition: 0.2s all ease-in-out;
+      &:hover {
+        background: #cecece;
+      }
+    }
+    a {
+      color: black;
+      text-decoration: none;
+    }
   }
 }
 </style>
