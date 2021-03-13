@@ -1,3 +1,5 @@
+import hash from 'object-hash'
+
 export const state = () => ({
   title: null,
   locale: 'en',
@@ -24,6 +26,7 @@ export const mutations = {
     state.locale = payload
   },
   setUser(state, payload) {
+    if (payload.password) payload.password = hash(payload.password)
     state.user = payload
   },
 }
