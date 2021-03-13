@@ -13,6 +13,9 @@
           </div>
         </template>
         <v-list>
+          <v-list-item>
+            {{ user.email }}
+          </v-list-item>
           <v-list-item @click="logout()">
             {{ $t('menu.logout') }}
           </v-list-item>
