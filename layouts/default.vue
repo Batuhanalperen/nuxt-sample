@@ -7,6 +7,25 @@
           <v-toolbar-title v-text="pageTitle" />
         </div>
         <div class="nav">
+          <ul>
+            <nuxt-link v-for="{ title, path } in menu" :key="path" :to="path">
+              <li>{{ $t(`menu.${title}`) }}</li>
+            </nuxt-link>
+            <Login v-if="!user.email" />
+            <v-menu v-else offset-y>
+              <template #activator="{ on, attrs }">
+                <div v-bind="attrs" class="user" v-on="on">
+                  {{ user.name }}
+                  <v-icon>mdi-chevron-down</v-icon>
+                </div>
+              </template>
+              <v-list>
+                <v-list-item @click="logout()">
+                  {{ $t('menu.logout') }}
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </ul>
           <v-menu offset-y>
             <template #activator="{ on, attrs }">
               <div v-bind="attrs" class="lang" v-on="on">
@@ -24,11 +43,6 @@
               </v-list-item>
             </v-list>
           </v-menu>
-          <ul>
-            <nuxt-link v-for="{ title, path } in menu" :key="path" :to="path">
-              <li>{{ $t(`menu.${title}`) }}</li>
-            </nuxt-link>
-          </ul>
         </div>
       </div>
     </v-app-bar>
@@ -57,7 +71,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['title', 'locale']),
+    ...mapGetters(['title', 'locale', 'user']),
     pageTitle() {
       return `Sample ${
         this.title !== this.$t('menu.homepage') && this.title
@@ -94,6 +108,9 @@ export default {
       this.$i18n.setLocale(code)
       this.setLocale(code)
     },
+    logout() {
+      this.$store.dispatch('logout')
+    },
   },
 }
 </script>
@@ -114,7 +131,8 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    .lang {
+    .lang,
+    .user {
       display: flex;
       align-items: center;
       padding: 0 16px;

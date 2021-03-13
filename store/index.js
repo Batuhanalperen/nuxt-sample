@@ -23,11 +23,13 @@ export const mutations = {
   setLocale(state, payload = 'en') {
     state.locale = payload
   },
-  setUser(state, { name = null, email = null }) {
-    state.user = { name, email }
+  setUser(state, payload) {
+    state.user = payload
   },
 }
 
 export const actions = {
-  nuxtServerInit({ commit }, { req }) {},
+  logout({ commit }) {
+    commit('setUser', { name: null, email: null })
+  },
 }

@@ -1,4 +1,6 @@
 {
   "homepage": "Anasayfa",
-  "contactUs": "İletişim"
+  "contactUs": "İletişim",
+  "login": "Giriş",
+  "logout": "Çıkış"
 }

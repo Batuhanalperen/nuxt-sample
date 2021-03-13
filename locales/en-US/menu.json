@@ -1,4 +1,6 @@
 {
   "homepage": "Homepage",
-  "contactUs": "Contact Us"
+  "contactUs": "Contact Us",
+  "login": "Login",
+  "logout": "Logout"
 }
