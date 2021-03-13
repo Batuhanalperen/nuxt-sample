@@ -1,5 +1,5 @@
 <template>
-  <div>{{ $i18n.locales }}</div>
+  <div>{{ $t('homepage.p') }}</div>
 </template>
 
 <script>
