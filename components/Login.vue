@@ -21,7 +21,7 @@
               <v-text-field
                 v-model="user.name"
                 :rules="nameRules"
-                label="Name"
+                :label="$t('login.name')"
                 required
               />
             </v-col>
@@ -30,7 +30,7 @@
               <v-text-field
                 v-model="user.email"
                 :rules="emailRules"
-                label="E-mail"
+                :label="$t('login.email')"
                 required
               />
             </v-col>
@@ -40,7 +40,7 @@
                 :rules="passwordRules"
                 :type="showPass ? 'text' : 'password'"
                 :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
-                label="Password"
+                :label="$t('login.password')"
                 required
                 @click:append="showPass = !showPass"
               />
@@ -83,9 +83,7 @@ export default {
         (v) => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
       passwordRules: [
-        (v) =>
-          /(?=.{8,})/.test(v) ||
-          'The string must be eight characters or longer',
+        (v) => /(?=.{8,})/.test(v) || this.$t('login.passValidator'),
       ],
     }
   },
