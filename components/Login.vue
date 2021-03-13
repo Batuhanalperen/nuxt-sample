@@ -34,6 +34,17 @@
                 required
               />
             </v-col>
+            <v-col cols="12" md="12">
+              <v-text-field
+                v-model="user.password"
+                :rules="passwordRules"
+                :type="showPass ? 'text' : 'password'"
+                :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                label="Password"
+                required
+                @click:append="showPass = !showPass"
+              />
+            </v-col>
           </v-row>
         </v-form>
       </v-container>
@@ -57,9 +68,11 @@ export default {
     return {
       isVisible: false,
       valid: false,
+      showPass: false,
       user: {
         name: '',
         email: '',
+        password: '',
       },
       nameRules: [
         (v) => !!v || 'Name is required',
@@ -68,6 +81,11 @@ export default {
       emailRules: [
         (v) => !!v || 'E-mail is required',
         (v) => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
+      passwordRules: [
+        (v) =>
+          /(?=.{8,})/.test(v) ||
+          'The string must be eight characters or longer',
       ],
     }
   },

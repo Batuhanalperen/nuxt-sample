@@ -1,7 +1,7 @@
 export const state = () => ({
   title: null,
   locale: 'en',
-  user: { name: null, email: null },
+  user: { name: null, email: null, password: null },
 })
 
 export const getters = {
@@ -30,6 +30,6 @@ export const mutations = {
 
 export const actions = {
   logout({ commit }) {
-    commit('setUser', { name: null, email: null })
+    commit('setUser', { name: null, email: null, password: null })
   },
 }
