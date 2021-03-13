@@ -1,7 +1,7 @@
 <template>
   <v-menu offset-y>
     <template #activator="{ on, attrs }">
-      <div v-bind="attrs" v-on="on">
+      <div v-bind="attrs" class="lang-activator" v-on="on">
         {{ selectedLocale }}
         <v-icon>mdi-chevron-down</v-icon>
       </div>
@@ -40,3 +40,11 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.lang-activator {
+  height: 100%;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+}
+</style>

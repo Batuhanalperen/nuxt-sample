@@ -73,7 +73,7 @@ export default {
   .user {
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    padding: 0;
     height: 100%;
     transition: 0.2s all ease-in-out;
     &:hover {
@@ -134,12 +134,15 @@ export default {
       .user {
         display: flex;
         align-items: center;
-        padding: 0 16px;
+        padding: 0;
         height: auto;
         transition: 0.2s all ease-in-out;
         &:hover {
           background: #cecece;
         }
+      }
+      .user {
+        padding: 0 16px;
       }
     }
     &.horizontal {
