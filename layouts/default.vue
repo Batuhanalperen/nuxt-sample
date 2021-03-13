@@ -3,11 +3,30 @@
     <v-app-bar fixed app elevation="0">
       <div class="navbar">
         <v-toolbar-title v-text="pageTitle" />
-        <ul class="nav">
-          <nuxt-link v-for="{ title, path } in menu" :key="path" :to="path">
-            <li>{{ title }}</li>
-          </nuxt-link>
-        </ul>
+        <div class="nav">
+          <v-menu offset-y>
+            <template #activator="{ on, attrs }">
+              <div v-bind="attrs" class="lang" v-on="on">
+                {{ selectedLocale }}
+                <v-icon>mdi-chevron-down</v-icon>
+              </div>
+            </template>
+            <v-list>
+              <v-list-item
+                v-for="locale in availableLocales"
+                :key="locale.code"
+                @click="changeLocale(locale.code)"
+              >
+                {{ locale.name }}
+              </v-list-item>
+            </v-list>
+          </v-menu>
+          <ul>
+            <nuxt-link v-for="{ title, path } in menu" :key="path" :to="path">
+              <li>{{ $t(`menu.${title}`) }}</li>
+            </nuxt-link>
+          </ul>
+        </div>
       </div>
     </v-app-bar>
     <v-main>
@@ -29,15 +48,25 @@ export default {
   data() {
     return {
       menu: [
-        { title: 'Homepage', path: '/' },
-        { title: 'Contact Us', path: '/contactUs' },
+        { title: 'homepage', path: this.$t('links.homepage') },
+        { title: 'contactUs', path: this.$t('links.contactUs') },
       ],
     }
   },
   computed: {
-    ...mapGetters(['title']),
+    ...mapGetters(['title', 'locale']),
     pageTitle() {
-      return `Sample ${this.title !== 'Homepage' ? `- ${this.title}` : ''}`
+      return `Sample ${
+        this.title !== this.$t('menu.homepage') && this.title
+          ? `- ${this.title}`
+          : ''
+      }`
+    },
+    availableLocales() {
+      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)
+    },
+    selectedLocale() {
+      return this.$i18n.locales.find((i) => i.code === this.$i18n.locale).name
     },
   },
   watch: {
@@ -45,14 +74,22 @@ export default {
       this.getTitle(path)
     },
   },
+  beforeMount() {
+    this.$i18n.setLocale(this.locale)
+  },
   mounted() {
     this.getTitle(this.$route.path)
   },
   methods: {
-    ...mapMutations(['setTitle']),
+    ...mapMutations(['setTitle', 'setLocale']),
     getTitle(path) {
-      const title = this.menu.find((x) => x.path === path).title || null
+      const finded = this.menu.find((x) => x.path === path)
+      const title = finded ? this.$t(`menu.${finded.title}`) : ''
       this.setTitle(title)
+    },
+    changeLocale(code) {
+      this.$i18n.setLocale(code)
+      this.setLocale(code)
     },
   },
 }
@@ -66,12 +103,27 @@ export default {
   align-items: center;
 }
 .nav {
-  margin-left: 16px;
-  list-style: none;
-  display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
   height: 100%;
+  display: flex;
+  align-items: center;
+  .lang {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    height: 100%;
+    transition: 0.2s all ease-in-out;
+    &:hover {
+      background: #cecece;
+    }
+  }
+  ul {
+    margin-left: 16px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: stretch;
+    height: 100%;
+    list-style: none;
+  }
   li {
     display: flex;
     align-items: center;
@@ -91,5 +143,9 @@ export default {
 <style>
 .v-toolbar__content {
   padding: 0 16px;
+}
+.nuxt-link-active {
+  color: black !important;
+  text-decoration: none;
 }
 </style>
