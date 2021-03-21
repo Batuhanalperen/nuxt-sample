@@ -1,4 +1,4 @@
-# sample
+# nuxt-sample
 
 [Demo](https://ba-nuxt-sample.netlify.app/)
 
