@@ -1,6 +1,6 @@
 # sample
 
-[Demo](https://ba-sample.netlify.app/)
+[Demo](https://ba-nuxt-sample.netlify.app/)
 
 ## Build Setup
 
